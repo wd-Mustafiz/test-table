@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato&family=Open+Sans:wght@500;700&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+  --title-font: 'Open Sans';
+  --data-font: 'Lato';
+  --white-bone: rgb(230, 230, 230);
+  --blue: rgb(51, 131, 255);
+  --light-black: rgb(0 0 0 / .8);
+  --transparent-black: rgb(0 0 0 / .2);
+  --white: #fff;
+  --light-gray: rgb(200, 200, 200, .7);
+}
+
+.page-title {
+  margin: 15px 0;
+  padding: 0 .5em;
+  
+  font-family: var(--title-font);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 4vw, 3.2rem);
+  text-align: center;
+  
+  color: var(--light-black);
+}
+
+/*---------------------Conversion Rate List----------------------*/
+.conversion-rate-list {
+  width: 80%;
+  margin: 25px auto;
+  
+  text-align: center;
+  
+  list-style: none;
+}
+
+.list-item {
+  padding-bottom: 2.5em;
+  
+  border-radius: 6px;
+  box-shadow: 1px 1px 16px var(--transparent-black);
+  overflow: hidden;
+}
+
+.list-item + .list-item {
+  margin-top: 10px;
+}
+
+.platform {
+  background: var(--blue);
+  color: var(--white);
+}
+
+.name,
+.platform {
+  font-family: var(--title-font), sans-serif;
+  font-size: 2.4rem;
+  font-weight: 500;
+  line-height: 2;
+}
+
+.value {
+  line-height: 1.5;
+  font-family: var(--data-font), sans-serif;
+  font-size: 2rem;
+  
+  color: var(--light-black);
+}
+/*-----------------------------Conversion Rate Table---------------------------*/
+.conversion-rate-table {
+  flex-basis: min(80%, 1200px);
+  
+  display: none;
+  
+  padding-bottom: 1em;
+  
+  background-color: var(--white-bone);
+  border-radius: 6px;
+  border-collapse: collapse;
+  box-shadow: 1px 1px 16px var(--transparent-black);
+  overflow: hidden;
+}
+
+.table__headers {
+  background-color: var(--blue);
+}
+
+.header {
+  padding: .25em 0;
+  
+  font-family: var(--title-font), sans-serif;
+  font-size: 1.8rem;
+  font-weight: 500;
+  
+  color: var(--white);
+}
+
+.table__row:nth-child(odd) {
+  background-color: var(--white);
+}
+
+.row__cell{
+  padding: .25em 0;
+  
+  font-family: var(--data-font), sans-serif;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.row__cell + .row__cell,
+.header + .header {
+  border-left: 1px solid var(--light-gray);
+}
+input{
+    border: none;
+    font-size: 16px;
+    background:none;
+    text-align: center;
+}
+input:focus-visible{
+    outline: none;
+}
+
+@media (min-width: 600px) {
+  .conversion-rate-list {
+    display: none;
+  }
+  
+  .conversion-rate-table {
+    display: table;
+  }
+  
+  .wrap {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.single-day{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 44%;
+    margin: auto;
+    margin-bottom: 10px;
+}
+.choose-day-popup{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 36%;
+    font-size: 20px;
+    background: rgb(47, 175, 218);
+    color: white;
+    border-radius: 10px;
+    display: none;
+}
+input[type="checkbox"]{
+    height:20px;
+    width:20px
+}
+input[type="time"]{
+    border: 1px solid white;
+    color: white;
+}
+.left-day{
+    padding: 20px 0;
+    border-radius: 5px;
+    text-align: center;
+    margin: auto;
+}
+
+button{
+    border: none;
+    cursor: pointer;
+    padding: 7px 10px;
+    border-radius:5px;
+    background:rgb(0, 207, 207);
+    color: white;
+
+}
+.zmdi{
+    color: lightgreen;
+}
+    </style>
+</head>
+<body>
+
+<div class="wrap">
+  <table class="conversion-rate-table">
+    <thead class="table__head">
+      <tr class="table__headers">
+        <th class="header" scope="col">Meals</th>
+
+        <th class="header" scope="col">Adjust time</th>
+
+        <th class="header" scope="col">saturday</th>
+        <th class="header" scope="col">sunday</th>
+        <th class="header" scope="col">monday</th>
+        <th class="header" scope="col">tuseday</th>
+        <th class="header" scope="col">wednesday</th>
+        <th class="header" scope="col">thursday</th>
+        <th class="header" scope="col">friday</th>
+
+      </tr>
+    </thead>
+
+    <tbody class="table__content" id="content_table">
+      
+
+    </tbody>
+  </table>
+  
+</div>
+
+<div class="choose-day-popup" id="popupbox">
+    <h3 style="text-align:center">choose day</h3>
+    <div class="left-day">
+        <div class="single-day">
+            <input type="checkbox" value="saturday" id="saturday"> <span>saturday</span>
+            <input id="saturdayVal" type="time">
+        </div>
+    
+        <div class="single-day">
+            <input type="checkbox" value="sunday" id="sunday"> <span>sunday</span>
+            <input id="sundayVal" type="time">
+        </div>
+        <div class="single-day">
+            <input type="checkbox" value="monday" id="monday"> <span>monday</span>
+            <input id="mondayVal" type="time">
+        </div>
+    
+        <div class="single-day">
+            <input type="checkbox" value="tuseday" id="tuseday"> <span>tuseday</span>
+            <input id="tusedayVal" type="time">
+        </div>
+
+        <div class="single-day">
+            <input type="checkbox" value="wednesday" id="wednesday"> <span>wednesday</span>
+            <input id="wednesdayVal" type="time">
+        </div>
+    
+        <div class="single-day">
+            <input type="checkbox" value="thursday" id="thursday"> <span>thursday</span>
+            <input id="thursdayVal" type="time">
+        </div>
+        <div class="single-day">
+            <input type="checkbox" value="friday" id="friday"> <span>friday</span>
+            <input id="fridayVal" type="time">
+        </div>
+    </div>
+
+    <button onclick="saveTiming()">save</button>
+    <button onclick="canclePopup()">cancle</button>
+    <br>
+</div>
+<button style="margin: 20px 180px;" onclick="addRow()">add more</button>
+
+<script>
+    let count = 1;
+    const mainTable = document.getElementById("content_table")
+    
+    const showpopup = (id) => {
+        count = id;
+        console.log(count);
+        console.log("clik marse");
+        document.getElementById("popupbox").style.display = "block"
+    }
+    const canclePopup = () => {
+        document.getElementById("popupbox").style.display = "none"
+    }
+    const addRow = () => {
+        count++;
+        console.log("click marse");
+        const newRow = document.createElement('tr')
+        newRow.classList.add("table__row")
+        newRow.innerHTML = `<td class="row__cell">
+            <input class="mealname" type="text" value="breakfast">
+        </td>
+        <td class="row__cell"><button id="${count}" onclick="showpopup(this.id)">adjust time</button></td>
+        <td class="row__cell" id="sat${count}">
+             
+        </td>
+        <td class="row__cell" id="sun${count}">
+             
+        </td>
+        <td class="row__cell" id="mon${count}">
+             
+            
+            </td>
+        <td class="row__cell" id="tue${count}">
+             
+            
+            </td>
+        <td class="row__cell" id="wed${count}">
+             
+            
+            </td>
+        <td class="row__cell" id="thus${count}">
+             
+            
+            </td>
+        <td class="row__cell" id="fry${count}">
+             
+            
+            </td>`;
+
+        mainTable.appendChild(newRow) 
+        
+    }
+
+    const saveTiming = () => {
+        const checkSat = document.getElementById("saturday").checked
+        const checkSun = document.getElementById("sunday").checked
+        const checkMon = document.getElementById("monday").checked
+        const checkTuse = document.getElementById("tuseday").checked
+        const checkWed = document.getElementById("wednesday").checked
+        const checkThus = document.getElementById("thursday").checked
+        const checkFry = document.getElementById("friday").checked
+
+        const SatVal = document.getElementById("saturdayVal").value;
+        const SunVal = document.getElementById("sundayVal").value
+        const MonVal = document.getElementById("mondayVal").value
+        const TuseVal = document.getElementById("tusedayVal").value
+        const WedVal = document.getElementById("wednesdayVal").value
+        const ThusVal = document.getElementById("thursdayVal").value
+        const FryVal = document.getElementById("fridayVal").value
+
+        if(checkSat == true){
+              document.querySelector(`#sat${count}`).innerText = SatVal;
+              document.querySelector(`#sat${count}`).innerHTML+=`<br><i class="zmdi zmdi-check-circle"></i>`
+        }
+
+        if(checkSun == true){
+            document.querySelector(`#sun${count}`).innerText = SunVal;
+            document.querySelector(`#sun${count}`).innerHTML+=`<br><i class="zmdi zmdi-check-circle"></i>`
+        }
+
+        if(checkMon == true){
+            document.querySelector(`#mon${count}`).innerText = MonVal;
+            document.querySelector(`#mon${count}`).innerHTML+=`<br><i class="zmdi zmdi-check-circle"></i>`
+        }
+
+        if(checkTuse == true){
+            document.querySelector(`#tue${count}`).innerText = TuseVal;
+            document.querySelector(`#tue${count}`).innerHTML+=`<br><i class="zmdi zmdi-check-circle"></i>`
+        }
+
+        if(checkWed == true){
+            document.querySelector(`#wed${count}`).innerText = WedVal;
+            document.querySelector(`#wed${count}`).innerHTML+=`<br><i class="zmdi zmdi-check-circle"></i>`
+        }
+
+        if(checkThus == true){
+            document.querySelector(`#thus${count}`).innerText = ThusVal;
+            document.querySelector(`#thus${count}`).innerHTML+=`<br><i class="zmdi zmdi-check-circle"></i>`
+        }
+
+        if(checkFry == true){
+            document.querySelector(`#fry${count}`).innerText = FryVal;
+            document.querySelector(`#fry${count}`).innerHTML+=`<br><i class="zmdi zmdi-check-circle"></i>`
+        }
+        document.getElementById("popupbox").style.display = "none"
+
+    }
+</script>
+</body>
+</html>
